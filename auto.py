@@ -16,12 +16,40 @@ def cisco_login(hostname, username, password):
     output = channel.recv(65535).decode('utf-8')
     
     if '#' in output:
-        channel.send("configure terminal\n")
-        channel.send("interface gig "+hostname+"\n")
-        channel.send("ip address 192.168.100.1 255.255.255.0\n")
-        channel.send("no shutdown\n")
-        channel.send("exit")
-        channel.send("ip route 0.0.0.0 0.0.0.0 gig0/1")
+        if hostname == "192.168.10.1":
+            channel.send("configure terminal\n")
+            channel.send("interface gig0/0\n")
+            channel.send("ip address 192.168.100.1 255.255.255.0\n")
+            channel.send("no shutdown\n")
+            channel.send("exit\n")
+            channel.send("interface gig0/1\n")
+            channel.send("ip address 10.10.10.1 255.255.255.252\n")
+            channel.send("no shutdown\n")
+            channel.send("exit\n")
+            channel.send("ip dhcp pool R1\n")
+            channel.send("network 192.168.100.0 255.255.255.0\n")
+            channel.send("default-router 192.168.100.1\n")
+            channel.send("exit\n")
+            channel.send("ip route 192.168.110.0 255.255.255.0 10.10.10.2\n")
+            ssh.close()
+        elif hostname == "192.168.20.1":
+            channel.send("configure terminal\n")
+            channel.send("interface gig0/0\n")
+            channel.send("ip address 192.168.110.1 255.255.255.0\n")
+            channel.send("no shutdown\n")
+            channel.send("exit\n")
+            channel.send("interface gig0/1\n")
+            channel.send("ip address 10.10.10.2 255.255.255.252\n")
+            channel.send("no shutdown\n")
+            channel.send("exit\n")
+            channel.send("ip dhcp pool R2\n")
+            channel.send("network 192.168.110.0 255.255.255.0\n")
+            channel.send("default-router 192.168.110.1\n")
+            channel.send("exit\n")
+            channel.send("ip route 192.168.110.0 255.255.255.0 10.10.10.2\n")
+            ssh.close()
+        else:
+            print("No connection")
 if __name__ == "main":
     router = [
         {"ip": "192.168.10.1", "username": "admin", "passwd": "Cisco19"},
