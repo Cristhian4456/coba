@@ -68,6 +68,7 @@ if __name__ == "__main__":
 
     # Langkah 2: Membagi dataset menjadi data training dan testing
     X_train, X_test, y_train, y_test = split_data(X, y)
+    print("ini data", X_test)
 
     # Langkah 3: Melatih model K-NN
     knn_model = train_knn(X_train, y_train)
@@ -77,9 +78,9 @@ if __name__ == "__main__":
 
     # Langkah 5: Tambah tiga data baru dan prediksi ulang
     new_data_list = [
-        np.array([[0, 2, 2]]),  # Contoh data baru pertama (sesuaikan dengan dataset)
-        np.array([[2, 0, 1]]),  # Contoh data baru kedua
-        np.array([[0, 1, 0]])   # Contoh data baru ketiga
+        np.array([[0, 0, 0]]),  # Contoh data baru pertama (sesuaikan dengan dataset)
+        np.array([[2, 0, 0]]),  # Contoh data baru kedua
+        np.array([[0, 0, 0]])   # Contoh data baru ketiga
     ]
 
     # Langkah 6: Prediksi tiga data baru dan pilih prediksi dengan jarak terdekat
